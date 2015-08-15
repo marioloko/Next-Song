@@ -1,0 +1,10 @@
+<h2>My tracks</h2>
+<% if @tracks.empty? %>
+	<p> There is no track yet </p>
+<% else %>
+	<% @tracks.each do |track| %>
+		<div class="lead">
+			<%= link_to track.title, track_path(track.id) %>
+		</div>
+	<% end %>
+<% end %>
