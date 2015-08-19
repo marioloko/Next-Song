@@ -16,6 +16,7 @@ class TracksController < ApplicationController
 	def create
 		@track = Track.new track_params
 		if @track.save
+			@play = Play.create party_id: params[:party_id], track_id: @track.id
 			redirect_to track_path(@track.id)
 		else
 			render 'new'

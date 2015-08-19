@@ -1,0 +1,21 @@
+<h2>You are in the party <%= @party.name %></h2>
+
+<input type="hidden" id="party" value="<%= @party.id %>">
+<input type="hidden" id="user" value="<%= current_user.id %>">
+
+<p class="lead">Vote the next song to sound</p>
+<div class="row">
+	<div class="col-md-12">
+		<ul id="next-songs-list" class="list-unstyled simple-box songs-list"></ul>
+	</div>
+</div>
+
+<!-- JavaScript files -->
+
+<%= javascript_include_tag 'select_track_controller' %>
+<%= javascript_include_tag 'search' %>
+<script id="button-generator" type="text/x-handlebars-template">
+	<%= render partial: 'next_tracks_items' %>
+</script>
+
+<%= javascript_include_tag 'vote_song' %>

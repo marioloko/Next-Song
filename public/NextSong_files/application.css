@@ -1,0 +1,91 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+.red-background {
+	background-color: #c22;
+}
+
+.white-background {
+	background-color: #fff;
+}
+
+.full-background {
+	min-height: 94vh;
+	margin-top: 5vh;
+	margin-bottom: 1vh;
+}
+
+.login-box {
+	margin-top: 5vh;
+	padding-bottom: 1vh;
+	border-radius: 10px;
+}
+
+.navigation-box {
+	border: solid 1px #eee;
+	border-radius: 1px;
+}
+
+.simple-box {
+	border: solid 1px #eee;
+}
+
+.btn-rounded {
+	height: 40px;
+	width: 40px;
+	border-radius: 100%;
+}
+
+.btn-ok-hover {
+	background-color: white;
+	border: solid 1px #5d5;
+	color: #5e5;
+}
+
+.btn-ok {
+	background-color: #5e5;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-remove-hover {
+	background-color: white;
+	border: solid 1px #d55;
+	color: #e55;
+}
+
+.btn-remove {
+	background-color: #e55;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-go-hover {
+	background-color: white;
+	border: solid 1px #55d;
+	color: #55e;
+}
+
+.btn-go {
+	background-color: #55e;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.list-separator {
+	margin-bottom: 2px;	
+}

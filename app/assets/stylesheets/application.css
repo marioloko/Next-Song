@@ -23,7 +23,7 @@
 }
 
 .full-background {
-	height: 94vh;
+	min-height: 94vh;
 	margin-top: 5vh;
 	margin-bottom: 1vh;
 }
@@ -39,3 +39,84 @@
 	border-radius: 1px;
 }
 
+.simple-box {
+	border: solid 1px #eee;
+}
+
+.btn-rounded {
+	height: 40px;
+	width: 40px;
+	border-radius: 100%;
+}
+
+.btn-ok-hover {
+	background-color: white;
+	border: solid 1px #5d5;
+	color: #5e5;
+}
+
+.btn-ok {
+	background-color: #5e5;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-remove-hover {
+	background-color: white;
+	border: solid 1px #d55;
+	color: #e55;
+}
+
+.btn-remove {
+	background-color: #e55;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-go-hover {
+	background-color: white;
+	border: solid 1px #55d;
+	color: #55e;
+}
+
+.btn-go {
+	background-color: #55e;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-like-hover {
+	background-color: white;
+	border: solid 1px #3cc;
+	color: #3b9;
+}
+
+.btn-like {
+	background-color: #3b9;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.btn-select-hover {
+	background-color: white;
+	border: solid 1px #e82;
+	color: #e82;
+}
+
+.btn-select {
+	background-color: #e82;
+	border: solid 1px #eee;
+	color: white;
+}
+
+.list-separator {
+	margin-bottom: 2px;	
+}
+
+.song-separator {
+	margin-left: 5px;
+}
+
+.text-vertical-center {
+	padding-top: 10px;
+}

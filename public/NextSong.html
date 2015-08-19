@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>NextSong</title>
+  <link rel="stylesheet" media="all" href="NextSong_files/invitations.css">
+<link rel="stylesheet" media="all" href="NextSong_files/plays.css">
+<link rel="stylesheet" media="all" href="NextSong_files/tracks.css">
+<link rel="stylesheet" media="all" href="NextSong_files/users.css">
+<link rel="stylesheet" media="all" href="NextSong_files/application.css">
+  <script src="NextSong_files/jquery.js"></script>
+<script src="NextSong_files/jquery_ujs.js"></script>
+<script src="NextSong_files/application.js"></script>
+  <script src="NextSong_files/handlebars-v3.js" data-turbolinks-track="true"></script>
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="UHD6rZ4iEUMgqKqgKVjzcthI1NXFrPEyQjjIyysSWjR8Aw67jpk10DEjrVjzO6FG/qQxmv3gzvkuLVQjdmtJhQ==">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="NextSong_files/bootstrap.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="NextSong_files/bootstrap-theme.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="NextSong_files/bootstrap.js"></script>
+
+</head>
+
+<body class="red-background">
+	<div class="container white-background full-background">
+
+		<div class="row">
+			<header>
+				<div class="col-md-12 text-center">
+					<h1>NEXT SONG</h1>
+				</div>
+
+				<div class="col-md-offset-1 col-md-10 navigation-box">
+					<nav id="top-bar">
+
+						<ul class="list-unstyled list-inline">
+							<li>
+								<a href="http://localhost:3000/users/profile">Profile</a>
+							</li>
+
+							<li>
+								<a rel="nofollow" data-method="DELETE" href="http://localhost:3000/users/sign_out">Sign Out</a>
+							</li>
+						</ul>
+
+					</nav>
+				</div>
+			</header>
+		</div>
+
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+
+				<h2>Play your party</h2>
+
+<input id="party" value="2" type="hidden">
+
+<audio src="NextSong_files/Gritando_en_Silencio_-_La_Edad_de_Mierda_-_02_-_Ganado.mp3" controls="controls" id="song-player"></audio>
+
+<h3>Add songs to your party</h3>
+<div class="form-group">
+	<label for="search">Search</label>
+	<input value="a" name="search" id="search" class="form-control" type="search">
+</div>
+
+<p><strong>OR:</strong> <a href="#" id="upload-track">Upload your tracks</a></p>
+
+<div class="row">
+	<div class="col-md-5">
+		<p class="lead">Searched Songs</p>
+		<ul class="list-unstyled simple-box" id="new-songs-list"></ul>
+	</div>
+
+	<div class="col-md-offset-1 col-md-5">
+		<p class="lead">Your current Songs</p>
+		<ul class="list-unstyled simple-box" id="current-songs-list">
+	
+
+
+	<li class="list-separator"> 
+	<div class="row">
+		<div class="col-md-9">
+				Rock and Roll de Barrabas-Gritando en silencio
+		</div>
+							
+		<div class="col-md-2">
+			<button id="2" class="btn-rounded btn-remove">
+				<span class="glyphicon glyphicon-remove "><span>
+			</span></span></button>
+		</div>
+	</div>
+</li>
+
+</ul>
+	</div>
+</div>
+
+<div class="modal fade" id="upload-song-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Upload Song</h4>
+      </div>
+
+      <div class="modal-body">
+       	<form class="new_track" id="new_track" enctype="multipart/form-data" action="/tracks" accept-charset="UTF-8" method="post"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="UHD6rZ4iEUMgqKqgKVjzcthI1NXFrPEyQjjIyysSWjR8Aw67jpk10DEjrVjzO6FG/qQxmv3gzvkuLVQjdmtJhQ==" type="hidden">
+	<div class="form-group">
+		<label for="track_title">Title:</label>
+		<input class="form-control" name="track[title]" id="track_title" type="text">
+	</div>
+
+	<div class="form-group">
+		<label for="track_artist">Artist:</label>
+		<input class="form-control" name="track[artist]" id="track_artist" type="text">
+	</div>
+
+	<div class="form-group">
+		<label for="track_audio">Track:</label>
+		<input name="track[audio]" id="track_audio" type="file">
+	</div>
+	
+	<input name="party_id" id="party_id" value="2" type="hidden">
+
+	<input name="commit" value="Upload Song" class="btn btn-success" type="submit">
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="NextSong_files/search.js"></script>
+
+<script id="button-generator" type="text/x-handlebars-template">
+	<li class="list-separator"> 
+	<div class="row">
+		<div class="col-md-9">
+				{{name}}-{{owner}}
+		</div>
+							
+		<div class="col-md-2">
+			<button id="{{id}}" class="btn-rounded {{button_class}}">
+				<span class="glyphicon glyphicon-{{icon}} "><span>
+			</button>
+		</div>
+	</div>
+</li>
+
+</script>
+
+<script src="NextSong_files/add_new_songs_to_party.js"></script>
+
+
+		
+			</div>
+		</div>
+
+	</div>
+
+
+</body></html>

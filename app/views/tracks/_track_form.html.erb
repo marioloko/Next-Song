@@ -13,6 +13,8 @@
 		<%= f.label :audio, 'Track:' %>
 		<%= f.file_field :audio %>
 	</div>
+	
+	<%= hidden_field_tag :party_id, party.id %>
 
-	<%= f.submit "Upload Song", class: "btn btn-default" %>
+	<%= f.submit "Upload Song", class: "btn btn-success" %>
 <% end %>

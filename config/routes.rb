@@ -5,7 +5,34 @@ Rails.application.routes.draw do
 
 	resources :tracks, only: [:index, :show, :new, :create]
 
+	resources :parties, only: [:create,:edit]
+	get '/parties/:id/vote' => 'parties#vote', as: 'party_vote'
+
+	resources :plays, only: [:create]
+	delete '/plays' => 'plays#destroy'
+
+	resources :invitations, only: [:create]
+	patch '/invitations' => 'invitations#update'
+
 	get '/users/profile' => 'users#profile', as: 'profile'	
+
+	namespace :api do
+		namespace :v1 do
+			namespace :parties do
+				get '/:party_id/tracks' => 'tracks#index'
+				get '/:party_id/tracks_excluded' => 'tracks#excluded'
+				get '/:party_id/invitations' => 'invitations#index'
+			end
+
+			namespace :users do
+				get '/:user_id/parties' => 'parties#index'
+				get '/:user_id/parties_excluded' => 'parties#excluded'
+			end
+
+			resources :parties, only: [:index, :show]
+			resources :tracks, only: [:index, :show]
+		end
+	end
 
 	get '*path' => redirect('/users/profile')
 

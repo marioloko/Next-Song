@@ -11,15 +11,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815164450) do
+ActiveRecord::Schema.define(version: 20150817094252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "party_id"
+    t.integer  "vote"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "invitations", ["party_id"], name: "index_invitations_on_party_id", using: :btree
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
 
   create_table "musics", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "parties", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "parties", ["user_id"], name: "index_parties_on_user_id", using: :btree
+
+  create_table "plays", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "plays", ["party_id"], name: "index_plays_on_party_id", using: :btree
+  add_index "plays", ["track_id"], name: "index_plays_on_track_id", using: :btree
 
   create_table "tracks", force: :cascade do |t|
     t.string   "title"
@@ -52,4 +82,9 @@ ActiveRecord::Schema.define(version: 20150815164450) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "invitations", "parties"
+  add_foreign_key "invitations", "users"
+  add_foreign_key "parties", "users"
+  add_foreign_key "plays", "parties"
+  add_foreign_key "plays", "tracks"
 end

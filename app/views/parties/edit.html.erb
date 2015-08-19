@@ -1,0 +1,40 @@
+<h2>Play your party</h2>
+
+<input type="hidden" id="party" value="<%= @party.id %>">
+
+<audio src="" controls id="song-player"></audio>
+
+<h3>Add songs to your party</h3>
+<div class="form-group">
+	<%= label_tag :search %>
+	<%= search_field_tag :search, nil, class: "form-control" %>
+</div>
+
+<p><strong>OR:</strong> <a href="#" id="upload-track">Upload your tracks</a></p>
+
+<div class="row">
+	<div class="col-md-5">
+		<p class="lead">Searched Songs</p>
+		<ul class="list-unstyled simple-box" id="new-songs-list"></ul>
+	</div>
+
+	<div class="col-md-offset-1 col-md-5">
+		<p class="lead">Your current Songs</p>
+		<ul class="list-unstyled simple-box" id="current-songs-list"></ul>
+	</div>
+</div>
+
+<%= render partial: 'tracks/track_form_modal', locals: { track: @track,
+	party: @party } %>
+
+
+<!-- JavaScript files -->
+<%= javascript_include_tag 'track_controller' %>
+<%= javascript_include_tag 'search' %>
+
+<script id="button-generator" type="text/x-handlebars-template">
+	<%= render partial: 'parties/button_generator' %>
+</script>
+
+<%= javascript_include_tag 'add_new_songs_to_party' %>
+

@@ -1,5 +1,49 @@
 <h2><%= @current_user.name %>!</h2>
 
+<input type="hidden" value="<%= @current_user.id %>" id="user">
+
 <p>
 	<strong>Email:</strong> <%= @current_user.email %>
 </p>
+
+<p>
+	<strong>My Party:</strong>
+	<% if @current_user.party %>
+		<%= link_to @current_user.party.name, 
+				edit_party_path(@current_user.party.id) %>
+	<% else %>
+		You have not your own party yet. 
+		<a href="#" id="show-party-modal">Create your party</a>
+	<% end %>
+</p>
+
+<div class="form-group">
+	<%= label_tag :search, 'Search Party' %>
+	<%= search_field_tag :search, nil, class: 'form-control' %>
+</div>
+
+<div class="row">
+	<div class="col-md-5">
+		<p class="lead">Searched Parties</p>
+		<ul id="new-parties-list" class="list-unstyled simple-box"></ul>
+	</div>
+
+	<div class="col-md-offset-1 col-md-5">
+		<p class="lead">Current Parties</p>
+		<ul id="current-parties-list" class="list-unstyled simple-box"></ul>
+	</div>
+</div>
+
+<%= render partial: 'parties/parties_form_modal', locals: { party: @party,
+			user: @current_user } %>
+
+
+<!-- JavaScript files -->
+<%= javascript_include_tag 'parties_controller' %>
+<%= javascript_include_tag 'search' %>
+
+<script id="button-generator" type="text/x-handlebars-template">
+	<%= render partial: 'parties/button_generator' %>
+</script>
+
+<%= javascript_include_tag 'user_profile' %>
