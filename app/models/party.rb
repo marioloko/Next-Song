@@ -11,4 +11,8 @@ class Party < ActiveRecord::Base
 	def owner
 		user.name	
 	end
+
+	def self.search search_params
+		where("name like ?", "%#{search_params}%")	
+	end
 end

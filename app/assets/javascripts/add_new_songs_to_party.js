@@ -4,13 +4,16 @@ var tracksController = new TracksController();
 tracksController.showModalAfterClick();
 
 $(document).on('ready', function() {
-	tracksController.setUpSong();
-	tracksController.changeSongWhenFinish()
+	tracksController.setUpSong('/api/v1/parties/_id_/invitations', 
+		$('#party').val(), '/api/v1/tracks/_id_');
 
-	search.showCurrentSearchs('/api/v1/parties/_id_/tracks', $("#party").val(), 
+	tracksController.changeSongWhenFinish('/api/v1/parties/_id_/invitations', 
+		$('#party').val(), '/api/v1/tracks/_id_')
+
+	search.showCurrentSearchs('/api/v1/parties/_id_/tracks', $('#party').val(), 
 		'#current-songs-list', 'btn-remove', 'remove', search.generateHtmlForList );
 
-	search.enterForSearching('/api/v1/parties/_id_/tracks_excluded',
+	search.enterForSearching('/api/v1/parties/_id_/search_excluded',
 		$('#party').val(), '#new-songs-list', search.generateHtmlForList,
 		'btn-ok', 'ok' );
 
@@ -26,7 +29,7 @@ $(document).on('ready', function() {
 });
 
 var ContextGenerator = function() {	
-	this.generateContext =function generateContext( track, button_class, icon,
+	this.generateContext = function generateContext( track, button_class, icon,
 		 callback) {
 		var context = { 
 			name: track.title,

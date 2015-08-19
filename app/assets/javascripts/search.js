@@ -37,18 +37,26 @@ var Search = function(){
 		$("#search").on('keydown', function(event) {
 			if (event.which == 13) {
 				event.preventDefault();
-				self.search(url_format, party_id, destination_list, generateHtml, 
-					btn_class, icon );
+				search_data = $("#search").val();
+				self.search(search_data, url_format, party_id, destination_list, 
+					generateHtml, btn_class, icon );
 			}
 		});
 	}
 
-	this.search = function search(url_format, party_id, destination_list,
-		 generateHtml, btn_class, icon ) {
+	this.search = function search(search_data, url_format, party_id, 
+			destination_list, generateHtml, btn_class, icon ) {
 		var url = url_format.replace('_id_', party_id);
-		$.get(url, function(searchs) {
-			refreshSearchList( searchs, destination_list, btn_class, icon,
-			 	generateHtml );
+		$.ajax({
+			url: url, 
+			type: 'GET',
+			data: {
+				'search' : search_data,
+			},
+			success: function( searchs ) {
+				refreshSearchList( searchs, destination_list, btn_class, icon,
+			 		generateHtml );
+			}	
 		});
 	}
 

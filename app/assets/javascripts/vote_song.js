@@ -7,7 +7,7 @@ $(document).ready(function(){
 	setSelectTrack( '#next-songs-list', 'btn-select', 'glyphicon-thumbs-up',
 		 'glyphicon-fire' );
 
-	search.search('/api/v1/parties/_id_/tracks', $('#party').val(),
+	search.search(null,'/api/v1/parties/_id_/tracks', $('#party').val(),
 		'#next-songs-list', search.generateHtmlForList, 'btn-like', 'thumbs-up');
 });
 

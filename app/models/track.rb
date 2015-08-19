@@ -11,4 +11,18 @@ class Track < ActiveRecord::Base
 	def audio_url
 		audio.url
 	end
+
+	def self.search search_params
+		where("title like ? OR artist like ?", "%#{search_params}%", 
+			"%#{search_params}%")
+	end
+
+	def self.search_in_party party_id, search_params
+		@party_tracks = Party.find(party_id).tracks	
+		@tracks = @party_tracks.search search_params
+	end
+
+	def self.search_excluded party_id, search_params
+		@excluded_tracks = all.search(search_params) - Party.find(party_id).tracks
+	end
 end

@@ -21,16 +21,24 @@ Rails.application.routes.draw do
 			namespace :parties do
 				get '/:party_id/tracks' => 'tracks#index'
 				get '/:party_id/tracks_excluded' => 'tracks#excluded'
+				get '/:party_id/search/' => 'tracks#search'
+				get '/:party_id/search_excluded/' => 'tracks#search_excluded'
+
 				get '/:party_id/invitations' => 'invitations#index'
 			end
 
 			namespace :users do
 				get '/:user_id/parties' => 'parties#index'
 				get '/:user_id/parties_excluded' => 'parties#excluded'
+
+				get '/:user_id/search' => 'parties#search'
+				get '/:user_id/search_excluded' => 'parties#search_excluded'
 			end
 
 			resources :parties, only: [:index, :show]
+
 			resources :tracks, only: [:index, :show]
+			get '/search' => 'tracks#search'
 		end
 	end
 

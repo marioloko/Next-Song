@@ -1,17 +1,22 @@
 class API::V1::TracksController < ApplicationController
 	def index
 		@tracks = Track.all
-		render :json => @tracks.to_json(:only => [:id, :title, :artist], 
-			:methods => [:audio_url])
+		json_format @tracks
 	end
 
 	def show
 		@track = Track.find params[:id]
-		render :json => @track.to_json(:only => [:id, :title, :artist],
-			:methods => [:audio_url])
+		json_format @track
 	end
 
 	def search
-		@tracks = Track.where "title like ?", "%#{params[:search]}%"
+		@track = Track.search params[:search]
+		json_format @tracks
+	end
+
+	private
+	def json_format tracks
+		render :json => tracks.to_json(:only => [:id, :title, :artist],
+			:methods => [:audio_url])
 	end
 end

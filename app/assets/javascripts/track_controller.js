@@ -1,24 +1,31 @@
 var TracksController = function() {
 	var self = this;
 
-	this.setUpSong = function setUpSong() {
-		$.get('/api/v1/parties/' + $('#party').val() + '/tracks', 
-				function( tracks ) {
-			$.get('/api/v1/parties/' + $('#party').val() + '/invitations', 
-					function( votes ) {
-				var voteIndex = Math.floor( Math.random() * votes.length );
-				var vote = votes[voteIndex];
-				console.log(vote)
-				var track = tracks[vote];
-				console.log(track);
-				$("#song-player").attr('src', track.audio_url );
-			});
+	this.setUpSong = function setUpSong(votes_url_format, party_id,
+			song_url_format) {
+		var votes_url = votes_url_format.replace('_id_', party_id);
+		getCompactVotes(votes_url, song_url_format);
+	}
+
+	function getCompactVotes(votes_url, song_url_format){
+		$.get(votes_url, function( votes ) {
+			var voteIndex = Math.floor( Math.random() * votes.length);
+			var vote = votes[voteIndex];
+			var song_url = song_url_format.replace('_id_', vote);
+			getSong(song_url);
 		});
 	}
+
+	function getSong(song_url) {
+		$.get(song_url, function( track ) {
+			$("#song-player").attr('src', track.audio_url);
+		});	
+	}
 	
-	this.changeSongWhenFinish = function changeSongWhenFinish() {
+	this.changeSongWhenFinish = function changeSongWhenFinish(votes_url_format,
+			party_id, song_url_format) {
 		$("#song-player").on('ended', function() {
-			self.setUpSong();
+			self.setUpSong(votes_url_format, party_id, song_url_format);
 		});
 	}
 

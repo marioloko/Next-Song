@@ -10,7 +10,7 @@ $(document).on('ready', function() {
 		'#current-parties-list', 'btn-go', 'arrow-right', 
 		search.generateHtmlForList );
 	
-	search.enterForSearching('/api/v1/users/_id_/parties_excluded', 
+	search.enterForSearching('/api/v1/users/_id_/search_excluded', 
 		$('#user').val(), "#new-parties-list", search.generateHtmlForList,
 	  'btn-ok', 'ok' );
 
