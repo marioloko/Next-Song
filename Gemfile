@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Easy audio uploads using ajax
+gem 'remotipart'
 # Use paperclip for store music
 gem 'paperclip', '~>4.2'
 

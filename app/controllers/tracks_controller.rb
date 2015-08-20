@@ -1,25 +1,16 @@
 class TracksController < ApplicationController
 	before_action :authenticate_user!
 
-	def index
-		@tracks = Track.all	
-	end
-
-	def show
-		@track = Track.find params[:id]
-	end
-	
-	def new
-		@track = Track.new
-	end
-
 	def create
 		@track = Track.new track_params
-		if @track.save
-			@play = Play.create party_id: params[:party_id], track_id: @track.id
-			redirect_to track_path(@track.id)
-		else
-			render 'new'
+		respond_to do |format|
+			if @track.save
+				@play = Play.create party_id: params[:party_id], track_id: @track.id
+				format.js {}
+				format.json { render json: @track, status: :created, location: @track }
+			else
+				format.json { render json: @track.errors, status: :unprocessable_entity}
+			end
 		end
 	end
 

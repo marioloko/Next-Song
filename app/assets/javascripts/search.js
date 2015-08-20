@@ -7,7 +7,9 @@ var Search = function(){
 	this.shineButtons = function shineButtons( list, btn_class ) {
 		$( list ).on('mouseenter mouseleave', 'button', function() {
 			var button = this;
-			toggleButtons( button , btn_class, btn_class + '-hover');
+			if (! $( this ).hasClass('btn-disabled') ) {
+				toggleButtons( button , btn_class, btn_class + '-hover');
+			}
 		});
 	}
 
@@ -60,11 +62,15 @@ var Search = function(){
 		});
 	}
 
-	function refreshSearchList( searchs, list, button_class, icon, generateHtml ){
+	function refreshSearchList( searchs, list, button_class, icon, generateHtml,
+		buttonsFunction ){
 		$( list ).empty();
 		searchs.forEach( function(search) {
 			addButtonWithSearch( search, list, button_class, icon, generateHtml );
 		});
+		if (typeof buttonsFunction === "function" ) {
+			buttonsFunction();
+		}
 	}
 	
 	function addButtonWithSearch(search, list, button_class, icon, generateHtml) {
@@ -72,10 +78,11 @@ var Search = function(){
 	}
 
 	this.showCurrentSearchs = function showCurrentSearchs(url_format, id, list,
-		 btn_class, icon, generateHtml) {
+		 btn_class, icon, generateHtml, buttonsFunction ) {
 		var url = url_format.replace('_id_', id)
 		$.get(url, function( searchs ) {
-			refreshSearchList( searchs, list, btn_class, icon, generateHtml);
+			refreshSearchList( searchs, list, btn_class, icon, generateHtml,
+			 buttonsFunction);
 		});
 	}
 	

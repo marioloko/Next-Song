@@ -1,6 +1,6 @@
 var TracksController = function() {
 	var self = this;
-
+	
 	this.setUpSong = function setUpSong(votes_url_format, party_id,
 			song_url_format) {
 		var votes_url = votes_url_format.replace('_id_', party_id);
@@ -33,6 +33,21 @@ var TracksController = function() {
 		$("#upload-track").on('click', function() {
 			$("#upload-song-modal").modal();
 		});	
+	}
+
+	this.setUploadSong = function setUploadSong(showCurrentSearchs) {
+		$('#track-form').on('ajax:complete', function(e, data) {
+			resetModal();
+			showCurrentSearchs();
+		});
+	}
+
+	function resetModal(){
+		$('#upload-song-modal').modal('toggle');
+		$('#track-form :input[type=text]').each( function() {
+			$(this).val('');
+		});
+		$('#track-form :input[type=file]').val('')
 	}
 
 	this.deleteSong = function deleteSong(button, callback) {

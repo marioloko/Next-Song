@@ -8,7 +8,10 @@ $(document).on('ready', function() {
 
 	search.showCurrentSearchs('/api/v1/users/_id_/parties', $('#user').val(),
 		'#current-parties-list', 'btn-go', 'arrow-right', 
-		search.generateHtmlForList );
+		search.generateHtmlForList, function() { 
+			partiesController.disableUnaceptedParties('/api/v1/users/_id_/parties');
+		}
+	);
 	
 	search.enterForSearching('/api/v1/users/_id_/search_excluded', 
 		$('#user').val(), "#new-parties-list", search.generateHtmlForList,
@@ -21,6 +24,8 @@ $(document).on('ready', function() {
 		partiesController.generatePartiesData, search.postSearch,
 		'/invitations', '/api/v1/parties/', search.generateHtmlForList,
 		'#current-parties-list', 'btn-go', 'arrow-right' )
+
+	partiesController.disableUnaceptedParties('/api/v1/users/_id_/not_accepted');
 });
 
 var ContextGenerator = function() {

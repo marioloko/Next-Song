@@ -14,4 +14,12 @@ class User < ActiveRecord::Base
 #	def self.online_now
 #		where("last_online > ?", 7.minutes.ago)
 #	end
+
+	def owner? party
+		self == party.user
+	end
+
+	def invited? party
+		Invitation.find_by(user_id: self.id, party_id: party.id, accepted: true)
+	end
 end

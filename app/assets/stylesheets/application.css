@@ -120,3 +120,9 @@
 .text-vertical-center {
 	padding-top: 10px;
 }
+
+.btn-disabled {
+	background-color: #eee;
+	border: solid 1px #ccc;
+	color: #ccc;
+}

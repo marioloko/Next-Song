@@ -4,6 +4,8 @@ class PartiesController < ApplicationController
 	def create
 		@party = Party.new party_params
 		if @party.save
+			Invitation.create(user_id: @party.user_id, party_id: @party.id,
+				accepted: true)
 			redirect_to edit_party_path(@party.id)
 		else
 			render 'users/profile'
@@ -13,7 +15,7 @@ class PartiesController < ApplicationController
 	def edit
 		@party = Party.find params[:id]
 		@track = Track.new
-		unless @party.user_id == current_user.id	
+		unless current_user.owner? @party
 			redirect_to party_vote_path
 		end
 	end
@@ -21,6 +23,9 @@ class PartiesController < ApplicationController
 	def vote
 		@party = Party.find params[:id]
 		@tracks = @party.tracks
+		unless current_user.invited? @party
+			redirect_to profile_path
+		end
 	end
 
 	private

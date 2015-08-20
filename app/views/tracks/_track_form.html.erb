@@ -1,4 +1,5 @@
-<%= form_for track, :html => { :multipart => true } do |f| %>
+<%= form_for track, :html => {:id => 'track-form', :multipart => true },
+	 :remote => true, :authenticity_token => true do |f| %>
 	<div class="form-group">
 		<%= f.label :title, 'Title:' %>
 		<%= f.text_field :title, class: "form-control" %>

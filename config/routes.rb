@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 	devise_for :users
 
-	resources :tracks, only: [:index, :show, :new, :create]
+	resources :tracks, only: [:create]
 
 	resources :parties, only: [:create,:edit]
 	get '/parties/:id/vote' => 'parties#vote', as: 'party_vote'
@@ -33,6 +33,9 @@ Rails.application.routes.draw do
 
 				get '/:user_id/search' => 'parties#search'
 				get '/:user_id/search_excluded' => 'parties#search_excluded'
+
+				get '/:user_id/accepted' => 'parties#accepted'
+				get '/:user_id/not_accepted' => 'parties#not_accepted'
 			end
 
 			resources :parties, only: [:index, :show]
