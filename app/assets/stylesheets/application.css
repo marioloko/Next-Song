@@ -14,12 +14,31 @@
  *= require_self
  */
 
-.red-background {
-	background-color: #c22;
+.outer-background {
+	background-image: url('wallpapper.jpeg');
 }
 
-.white-background {
-	background-color: #fff;
+.inner-background {
+	background-color: rgba(75,75,75,.95);
+	color: #dda;
+	border: solid 10px #888;
+	border-radius: 35px;
+	box-shadow: 4px 4px 4px #664;
+	-webkit-box-shadow:4px 4px 4px #664; 
+	-moz-box-shadow:4px 4px 4px #664; 
+}
+
+.modal {
+	color: black;
+}
+
+.beutiful-text-input {
+	border: solid 1px #666;
+}
+
+.box-shadow {
+	background-color: #997;
+	color: #eec;
 }
 
 .full-background {
@@ -35,22 +54,30 @@
 }
 
 .navigation-box {
-	border: solid 1px #eee;
+	border: solid 1px #aaa;
 	border-radius: 1px;
 }
 
+.opaco {
+	opacity: 1;
+}
+
 .small-scroll-box {
-	border: solid 1px #eee;
+	background-color: #777;
+	border: solid 5px #aaa;
 	height: 25vh;
 	overflow-y: auto;
 	overflow-x: hidden;
+	border-radius: 25px;
 }
 
 .middle-scroll-box {
-	border: solid 1px #eee;
+	background-color: #777;
+	border: solid 5px #aaa;
 	height: 35vh;
 	overflow-y: auto;
 	overflow-x: hidden;
+	border-radius: 25px;
 }
 
 .btn-rounded {

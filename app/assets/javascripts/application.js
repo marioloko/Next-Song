@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require async
+//= require websocket_rails/main
+

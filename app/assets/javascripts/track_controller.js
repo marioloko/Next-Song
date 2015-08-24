@@ -89,6 +89,7 @@ var TracksController = function() {
 var ContextTrackGenerator = function() {	
 	this.generateContext = function generateContext( track, button_class, icon,
 	compile) {
+		console.log( track );
 		var context = { 
 			name: track.title,
 			owner: track.artist,

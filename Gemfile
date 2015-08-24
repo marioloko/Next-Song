@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+#websocket-rails for real time connections
+gem 'websocket-rails'
 # Easy audio uploads using ajax
 gem 'remotipart'
 # Use paperclip for store music

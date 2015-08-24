@@ -5,10 +5,10 @@ tracksController.showModalAfterClick();
 
 $(document).on('ready', function() {
 	tracksController.setUpSong('/api/v1/parties/_id_/invitations', 
-		$('#party').val(), '/api/v1/tracks/_id_');
+	$('#party').val(), '/api/v1/tracks/_id_');
 
 	tracksController.changeSongWhenFinish('/api/v1/parties/_id_/invitations', 
-		$('#party').val(), '/api/v1/tracks/_id_')
+	$('#party').val(), '/api/v1/tracks/_id_')
 
 	// Songs lists
 	var tracksGenerator = new ContextTrackGenerator();
@@ -16,7 +16,7 @@ $(document).on('ready', function() {
 	tracksController.setUploadSong(function(){
 		searcher.displayCurrentSearchs('/api/v1/parties/_id_/tracks', 
 		$('#party').val(), '#current-songs-list', 'btn-remove', 'remove',
-		tracksController.generateContext);
+		tracksGenerator.generateContext);
 	});
 
 	searcher.displayCurrentSearchs('/api/v1/parties/_id_/tracks', 
