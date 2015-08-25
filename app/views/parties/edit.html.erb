@@ -1,26 +1,34 @@
-<h2>Play your party</h2>
-
 <input type="hidden" id="party" value="<%= @party.id %>">
 
-<audio src="" controls id="song-player"></audio>
+<div class="row">
+	<div class="col-md-5">
+		<h2>Play your party</h2>
+		<audio src="" controls id="song-player"></audio>
+		<h3>Add songs to your party</h3>
+		<div class="form-group">
+			<%= label_tag :search %>
+			<%= search_field_tag :search, nil, class: "form-control" %>
+		</div>
+	</div>
 
-<h3>Add songs to your party</h3>
-<div class="form-group">
-	<%= label_tag :search %>
-	<%= search_field_tag :search, nil, class: "form-control" %>
+	<div class="col-md-offset-1 col-md-5">
+		<p class="lead">Party requests</p>
+		<ul class="list-unstyled small-scroll-box" id="parties-request-list"></ul>
+	</div>
 </div>
+		
 
 <p><strong>OR:</strong> <a href="#" id="upload-track">Upload your tracks</a></p>
 
 <div class="row">
 	<div class="col-md-5">
 		<p class="lead">Searched Songs</p>
-		<ul class="list-unstyled simple-box" id="new-songs-list"></ul>
+		<ul class="list-unstyled small-scroll-box" id="new-songs-list"></ul>
 	</div>
 
 	<div class="col-md-offset-1 col-md-5">
 		<p class="lead">Your current Songs</p>
-		<ul class="list-unstyled simple-box" id="current-songs-list"></ul>
+		<ul class="list-unstyled small-scroll-box" id="current-songs-list"></ul>
 	</div>
 </div>
 

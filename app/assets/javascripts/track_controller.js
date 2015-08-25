@@ -1,14 +1,15 @@
 var TracksController = function() {
 	var self = this;
+	var searcher = new Search();
 	
 	this.setUpSong = function setUpSong(votes_url_format, party_id,
-			song_url_format) {
+	song_url_format) {
 		var votes_url = votes_url_format.replace('_id_', party_id);
 		getCompactVotes(votes_url, song_url_format);
 	}
 
 	function getCompactVotes(votes_url, song_url_format){
-		$.get(votes_url, function( votes ) {
+	$.get(votes_url, function( votes ) {
 			var voteIndex = Math.floor( Math.random() * votes.length);
 			var vote = votes[voteIndex];
 			var song_url = song_url_format.replace('_id_', vote);
@@ -50,24 +51,65 @@ var TracksController = function() {
 		$('#track-form :input[type=file]').val('')
 	}
 
-	this.deleteSong = function deleteSong(button, callback) {
+	this.deleteSong = function deleteSong(button, removeButton) {
 		$.ajax({
 			url: '/plays/' + '?' +  $.param({ "party_id" : $("#party").val(), 
 				"track_id" : $( button ).attr('id')}),
 			type: 'DELETE',
 			success: function() { 
-				callback();
+				removeButton();
 			}
 		});
 	}
 
-	this.generateTrackData = function generateTrackData( callback, post_url,
-		 search_url, button, generateHtml, destination_list, btn_class, icon ) {
+	this.acceptUser = function acceptUser(button, removeButton) {
+		$.ajax({
+			url: '/invitations',
+			type: 'PATCH',
+			data: {
+				'party_id': $('#party').val(),
+				'user_id': $( button ).attr('id'),
+				'accepted': true
+			},
+			success: function() {
+				removeButton();	
+			}
+		});
+	}
+
+	this.generateTrackData = function generateTrackData(button, postSearch ) {
 		var data = { 
 			"party_id" : $("#party").val(), 
 			"track_id": $( button ).attr('id')
 	 	}
-		callback(data, post_url, search_url, button, generateHtml, destination_list, 
-		btn_class, icon);
+		postSearch( data );
+	}
+}
+
+var ContextTrackGenerator = function() {	
+	this.generateContext = function generateContext( track, button_class, icon,
+	compile) {
+		var context = { 
+			name: track.title,
+			owner: track.artist,
+			id: track.id,
+			button_class: button_class,
+			icon: icon
+		}
+		compile(context);
+	}
+}
+
+var ContextUserGenerator = function() {
+	this.generateContext = function generateContext( user, button_class, icon,
+	compile) {
+		var context = {	
+			name: user.username,
+			owner: user.name,
+			id: user.id,
+			button_class: button_class,
+			icon: icon
+		}
+		compile(context);
 	}
 }

@@ -14,9 +14,18 @@ class InvitationsController < ApplicationController
 	def update
 		@invitation = Invitation.find_by(party_id: params[:party_id], 
 			user_id: params[:user_id])
-		unless @invitation.update_attribute(:vote, params[:vote])
-			status = 400
+		status = 200
+
+		if params[:vote]
+			@invitation.update_attribute(:vote, params[:vote])
+		elsif params[:accepted]
+			@invitation.update_attribute(:accepted, params[:accepted])
+		end
+
+		unless @invitation.save
+			status = 400	
 		end
 		render :json => @invitation, :status => status
 	end
+
 end

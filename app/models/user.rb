@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
 	def invited? party
 		Invitation.find_by(user_id: self.id, party_id: party.id, accepted: true)
 	end
+
+	def get_accepted_parties accepted=true
+		parties.references(:invitations).where(invitations: { accepted: accepted } )
+	end
 end

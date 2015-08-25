@@ -5,6 +5,9 @@ gem 'remotipart'
 # Use paperclip for store music
 gem 'paperclip', '~>4.2'
 
+# Use async for a more readable javascript code
+gem 'async-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record

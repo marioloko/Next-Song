@@ -1,36 +1,36 @@
-var search = new Search();
+var searcher = new Search();
 var partiesController = new PartiesController();
 
 partiesController.showPartyModal();
 
 $(document).on('ready', function() {
+	var partiesGenerator = new ContextPartiesGenerator();
+
 	partiesController.goParty();
 
-	search.showCurrentSearchs('/api/v1/users/_id_/parties', $('#user').val(),
-		'#current-parties-list', 'btn-go', 'arrow-right', 
-		search.generateHtmlForList, function() { 
-			partiesController.disableUnaceptedParties('/api/v1/users/_id_/parties');
-		}
-	);
+	searcher.displayCurrentSearchs('/api/v1/users/_id_/parties', $('#user').val(),
+	'#current-parties-list', 'btn-go', 'arrow-right',
+	partiesGenerator.generateContext);
 	
-	search.enterForSearching('/api/v1/users/_id_/search_excluded', 
-		$('#user').val(), "#new-parties-list", search.generateHtmlForList,
-	  'btn-ok', 'ok' );
+	searcher.searchAction('/api/v1/users/_id_/search_excluded', 
+		$('#user').val(), "#new-parties-list", 'btn-ok', 'ok',
+	partiesGenerator.generateContext );
 
-	search.shineButtons('#current-parties-list', 'btn-go' );
-	search.shineButtons('#new-parties-list', 'btn-ok');
+	searcher.shineButtons('#current-parties-list', 'btn-go' );
+	searcher.shineButtons('#new-parties-list', 'btn-ok');
 
-	search.addNewSearch('#new-parties-list',
-		partiesController.generatePartiesData, search.postSearch,
-		'/invitations', '/api/v1/parties/', search.generateHtmlForList,
-		'#current-parties-list', 'btn-go', 'arrow-right' )
-
-	partiesController.disableUnaceptedParties('/api/v1/users/_id_/not_accepted');
+	searcher.appendNewSearch('#new-parties-list',
+	partiesController.generatePartiesData, '/invitations', '/api/v1/parties/', 
+	'#current-parties-list', 'btn-go', 'arrow-right',
+	partiesGenerator.generateContext)
 });
 
-var ContextGenerator = function() {
+var ContextPartiesGenerator = function() {
 	this.generateContext = function generateContext( party, button_class, icon,
 		callback ){
+		if (button_class === 'btn-go' && !party.accepted){
+			button_class += ' btn-disabled';
+		}
 		var context = {
 			name: party.name,
 			owner: party.owner,

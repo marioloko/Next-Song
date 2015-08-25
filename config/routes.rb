@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 				get '/:party_id/search_excluded/' => 'tracks#search_excluded'
 
 				get '/:party_id/invitations' => 'invitations#index'
+
+				get '/:party_id/users/accepted' => 'users#accepted'
+				get '/:party_id/users/not_accepted' => 'users#not_accepted'
 			end
 
 			namespace :users do
@@ -34,8 +37,8 @@ Rails.application.routes.draw do
 				get '/:user_id/search' => 'parties#search'
 				get '/:user_id/search_excluded' => 'parties#search_excluded'
 
-				get '/:user_id/accepted' => 'parties#accepted'
-				get '/:user_id/not_accepted' => 'parties#not_accepted'
+				get '/:user_id/parties/accepted' => 'parties#accepted'
+				get '/:user_id/parties/not_accepted' => 'parties#not_accepted'
 			end
 
 			resources :parties, only: [:index, :show]

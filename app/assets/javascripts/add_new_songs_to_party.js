@@ -1,4 +1,4 @@
-var search = new Search();
+var searcher = new Search();
 var tracksController = new TracksController();
 
 tracksController.showModalAfterClick();
@@ -10,40 +10,45 @@ $(document).on('ready', function() {
 	tracksController.changeSongWhenFinish('/api/v1/parties/_id_/invitations', 
 		$('#party').val(), '/api/v1/tracks/_id_')
 
+	// Songs lists
+	var tracksGenerator = new ContextTrackGenerator();
+
 	tracksController.setUploadSong(function(){
-		search.showCurrentSearchs('/api/v1/parties/_id_/tracks', $('#party').val(), 
-			'#current-songs-list', 'btn-remove', 'remove', 
-			search.generateHtmlForList );
+		searcher.displayCurrentSearchs('/api/v1/parties/_id_/tracks', 
+		$('#party').val(), '#current-songs-list', 'btn-remove', 'remove',
+		tracksController.generateContext);
 	});
 
-	search.showCurrentSearchs('/api/v1/parties/_id_/tracks', $('#party').val(), 
-		'#current-songs-list', 'btn-remove', 'remove', search.generateHtmlForList );
+	searcher.displayCurrentSearchs('/api/v1/parties/_id_/tracks', 
+	$('#party').val(), '#current-songs-list', 'btn-remove', 'remove',
+	tracksGenerator.generateContext);
 
-	search.enterForSearching('/api/v1/parties/_id_/search_excluded',
-		$('#party').val(), '#new-songs-list', search.generateHtmlForList,
-		'btn-ok', 'ok' );
+	searcher.searchAction('/api/v1/parties/_id_/search_excluded',
+	$('#party').val(), '#new-songs-list', 'btn-ok', 'ok',
+	tracksGenerator.generateContext);
 
-	search.shineButtons('#current-songs-list', 'btn-remove');
-	search.shineButtons('#new-songs-list', 'btn-ok');
+	searcher.shineButtons('#current-songs-list', 'btn-remove');
 
-	search.deleteCurrentSearch('#current-songs-list', 
-		tracksController.deleteSong);
+	searcher.shineButtons('#new-songs-list', 'btn-ok');
 
-	search.addNewSearch('#new-songs-list', tracksController.generateTrackData,
-	 	search.postSearch, '/plays', '/api/v1/tracks/', search.generateHtmlForList, 
-		'#current-songs-list', 'btn-remove', 'remove' );
+	searcher.deleteCurrentSearch('#current-songs-list', 
+	tracksController.deleteSong);
+
+	searcher.appendNewSearch('#new-songs-list', 
+	tracksController.generateTrackData, '/plays', '/api/v1/tracks/', 
+	'#current-songs-list', 'btn-remove', 'remove',
+	tracksGenerator.generateContext );
+
+	// Parties request list
+	var usersGenerator = new ContextUserGenerator();
+
+	searcher.displayCurrentSearchs('/api/v1/parties/_id_/users/not_accepted', 
+	$('#party').val(), '#parties-request-list', 'btn-friend', 'user',
+	usersGenerator.generateContext);
+
+	searcher.shineButtons('#parties-request-list', 'btn-friend');
+
+	searcher.deleteCurrentSearch('#parties-request-list',
+	tracksController.acceptUser)		
+
 });
-
-var ContextGenerator = function() {	
-	this.generateContext = function generateContext( track, button_class, icon,
-		 callback) {
-		var context = { 
-			name: track.title,
-			owner: track.artist,
-			id: track.id,
-			button_class: button_class,
-			icon: icon
-		}
-		return callback(context);
-	}
-}

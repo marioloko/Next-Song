@@ -15,23 +15,11 @@ var PartiesController = function() {
 		});
 	}
 
-	this.generatePartiesData = function generatePartiesData( callback, post_url,
-		search_url, button, generateHtml, destination_list, btn_class, icon ) {
+	this.generatePartiesData = function generatePartiesData(button, postSearch) {
 		var data = {
 			"user_id" : $("#user").val(),
 			"party_id" : $( button ).attr('id')
 		};		
-		callback(data, post_url, search_url, button, generateHtml,
-	 		destination_list, btn_class, icon);
-	}
-
-	this.disableUnaceptedParties = function disableUnaceptedParties(url_format) {
-		var user_id = $('#user').val();
-		var url = url_format.replace('_id_', user_id)
-		$.get(url, function( party_ids ) {
-			party_ids.forEach( function( party_id ) {
-				$('#' + party_id).addClass('btn-disabled');
-			});
-		});
+		postSearch( data );
 	}
 }
