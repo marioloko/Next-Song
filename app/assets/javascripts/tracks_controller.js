@@ -1,27 +1,19 @@
 var searcher = new Searcher();
-var tracksController = new TracksController();
+var tracksModel = new TracksModel();
 
-tracksController.showModalAfterClick();
+tracksModel.showModalAfterClick();
 
 $(document).on('ready', function() {
-	var parties_channel = dispatcher.subscribe('new_invitations');
-
-	parties_channel.bind('new_invitation', function() {
-		searcher.displayCurrentSearchs('/api/v1/parties/_id_/users/not_accepted', 
-		$('#party').val(), '#parties-request-list', 'btn-friend', 'user',
-		usersGenerator.generateContext);
-	});
-
-	tracksController.setUpSong('/api/v1/parties/_id_/invitations', 
+	tracksModel.setUpSong('/api/v1/parties/_id_/invitations', 
 	$('#party').val(), '/api/v1/tracks/_id_');
 
-	tracksController.changeSongWhenFinish('/api/v1/parties/_id_/invitations', 
+	tracksModel.changeSongWhenFinish('/api/v1/parties/_id_/invitations', 
 	$('#party').val(), '/api/v1/tracks/_id_')
 
 	// Songs lists
 	var tracksGenerator = new ContextTrackGenerator();
 
-	tracksController.setUploadSong(function(){
+	tracksModel.setUploadSong(function(){
 		searcher.displayCurrentSearchs('/api/v1/parties/_id_/tracks', 
 		$('#party').val(), '#current-songs-list', 'btn-remove', 'remove',
 		tracksGenerator.generateContext);
@@ -40,10 +32,10 @@ $(document).on('ready', function() {
 	searcher.animateButtonsOnHover('#new-songs-list', 'btn-ok-hover');
 
 	searcher.setButtonOnClickActionEvent('#current-songs-list', 
-	tracksController.deleteSong);
+	tracksModel.deleteSong);
 
-	searcher.appendNewSearch('#new-songs-list', 
-	tracksController.generateTrackData, 'create_track', '/api/v1/tracks/', 
+	searcher.displayNewSearch('#new-songs-list', 
+	tracksModel.generateTrackData, 'create_track', '/api/v1/tracks/', 
 	'#current-songs-list', 'btn-remove', 'remove',
 	tracksGenerator.generateContext );
 
@@ -57,6 +49,7 @@ $(document).on('ready', function() {
 	searcher.animateButtonsOnHover('#parties-request-list', 'btn-friend-hover');
 
 	searcher.setButtonOnClickActionEvent('#parties-request-list',
-	tracksController.acceptUser)		
+	tracksModel.acceptUser)		
 
+	tracksModel.setPartyRequestsEvent( usersGenerator.generateContext );
 });

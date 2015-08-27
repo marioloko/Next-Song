@@ -236,3 +236,7 @@
 	border-radius: 20px;
 	border: solid 1px #999;
 }
+
+#not-invited .modal-dialog {
+	margin-top: 40vh;
+}

@@ -1,25 +1,28 @@
-var PartiesController = function() {
-	this.goParty = function goParty() {
-		$('#current-parties-list').on('click', 'button', function() {
-			if ( ! $( this ).hasClass( 'btn-disabled') ) {
-				location.href = '/parties/' + $( this ).attr('id') + '/vote'	
-			} else {
-				alert('You has not been accepted in the party yet');
-			}
-		});
-	}
-	
-	this.showPartyModal = function showPartyModal() {
-		$("#show-party-modal").on('click', function() {
-			$("#new-party").modal();
-		});
-	}
+var searcher = new Searcher();
+var partiesModel = new PartiesModel();
 
-	this.generatePartiesData = function generatePartiesData(button, postSearch) {
-		var data = {
-			"user_id" : $("#user").val(),
-			"party_id" : $( button ).attr('id')
-		};		
-		postSearch( data );
-	}
-}
+partiesModel.showPartyModal();
+
+$(document).on('ready', function() {
+	var partiesGenerator = new ContextPartiesGenerator();
+
+	partiesModel.setGoPartyOnClickEvent();
+
+	searcher.displayCurrentSearchs('/api/v1/users/_id_/parties', $('#user').val(),
+	'#current-parties-list', 'btn-go', 'arrow-right',
+	partiesGenerator.generateContext);
+	
+	searcher.searchBoxAction('/api/v1/users/_id_/search_excluded', 
+		$('#user').val(), "#new-parties-list", 'btn-ok', 'ok',
+	partiesGenerator.generateContext );
+
+	searcher.animateButtonsOnHover('#current-parties-list', 'btn-go-hover' );
+	searcher.animateButtonsOnHover('#new-parties-list', 'btn-ok-hover');
+
+	searcher.displayNewSearch('#new-parties-list',
+	partiesModel.generatePartiesData, 'create_invitation', 
+	'/api/v1/parties/', '#current-parties-list', 'btn-go', 'arrow-right',
+	partiesGenerator.generateContext)
+
+	partiesModel.setPartiesAcceptedEvent();
+});

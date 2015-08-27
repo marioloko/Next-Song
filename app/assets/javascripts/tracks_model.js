@@ -1,4 +1,4 @@
-var TracksController = function() {
+var TracksModel = function() {
 	var self = this;
 	var searcher = new Searcher();
 	
@@ -76,6 +76,16 @@ var TracksController = function() {
 			"track_id": $( button ).attr('id')
 	 	}
 		postSearch( data );
+	}
+
+	this.setPartyRequestsEvent = function(generateContext) {
+		var parties_channel = dispatcher.subscribe('new_invitations');
+	
+		parties_channel.bind('new_invitation', function() {
+			searcher.displayCurrentSearchs('/api/v1/parties/_id_/users/not_accepted', 
+			$('#party').val(), '#parties-request-list', 'btn-friend', 'user',
+			generateContext);
+		});
 	}
 }
 

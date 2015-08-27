@@ -38,13 +38,15 @@
 <%= render partial: 'parties/parties_form_modal', locals: { party: @party,
 			user: @current_user } %>
 
+<%= render partial: 'parties/not_invited_modal' %>
+
 
 <!-- JavaScript files -->
-<%= javascript_include_tag 'parties_controller' %>
-<%= javascript_include_tag 'search' %>
+<%= javascript_include_tag 'parties_model' %>
+<%= javascript_include_tag 'searcher' %>
 
 <script id="button-generator" type="text/x-handlebars-template">
 	<%= render partial: 'parties/button_generator' %>
 </script>
 
-<%= javascript_include_tag 'user_profile' %>
+<%= javascript_include_tag 'parties_controller' %>

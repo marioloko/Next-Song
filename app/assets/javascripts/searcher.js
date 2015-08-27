@@ -150,7 +150,7 @@ var Searcher = function(){
 		removeParentLi( button );	
 	}
 
-	this.appendNewSearch = function(current_list, generateData, post_url,
+	this.displayNewSearch = function(current_list, generateData, post_url,
 	search_url, destination_list, button_class, icon, generateContext) {	
 		async.waterfall([
 			function( generateData ) {

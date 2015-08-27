@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="col-md-5">
-		<h2>Play your party</h2>
+		<h2>Play your party: <%= @party.name %></h2>
 		<audio src="" controls id="song-player"></audio>
 		<h3>Add songs to your party</h3>
 		<div class="form-group">
@@ -38,12 +38,12 @@
 
 
 <!-- JavaScript files -->
-<%= javascript_include_tag 'track_controller' %>
-<%= javascript_include_tag 'search' %>
+<%= javascript_include_tag 'tracks_model' %>
+<%= javascript_include_tag 'searcher' %>
 
 <script id="button-generator" type="text/x-handlebars-template">
 	<%= render partial: 'parties/button_generator' %>
 </script>
 
-<%= javascript_include_tag 'add_new_songs_to_party' %>
+<%= javascript_include_tag 'tracks_controller' %>
 
