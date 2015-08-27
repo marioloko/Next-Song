@@ -52,29 +52,22 @@ var TracksController = function() {
 	}
 
 	this.deleteSong = function deleteSong(button, removeButton) {
-		$.ajax({
-			url: '/plays/' + '?' +  $.param({ "party_id" : $("#party").val(), 
-				"track_id" : $( button ).attr('id')}),
-			type: 'DELETE',
-			success: function() { 
-				removeButton();
-			}
-		});
+		var data = { 
+			"party_id" : $("#party").val(), 
+			"track_id" : $( button ).attr('id')
+		}
+		dispatcher.trigger('destroy_track', data);
+		removeButton();
 	}
 
 	this.acceptUser = function acceptUser(button, removeButton) {
-		$.ajax({
-			url: '/invitations',
-			type: 'PATCH',
-			data: {
-				'party_id': $('#party').val(),
-				'user_id': $( button ).attr('id'),
-				'accepted': true
-			},
-			success: function() {
-				removeButton();	
-			}
-		});
+		var data = {
+			'party_id': $('#party').val(),
+			'user_id': $( button ).attr('id'),
+			'accepted': true
+		}
+		dispatcher.trigger('accept', data);
+		removeButton();	
 	}
 
 	this.generateTrackData = function generateTrackData(button, postSearch ) {
@@ -89,7 +82,6 @@ var TracksController = function() {
 var ContextTrackGenerator = function() {	
 	this.generateContext = function generateContext( track, button_class, icon,
 	compile) {
-		console.log( track );
 		var context = { 
 			name: track.title,
 			owner: track.artist,

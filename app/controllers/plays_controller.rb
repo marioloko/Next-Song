@@ -1,21 +1,23 @@
-class PlaysController < ApplicationController
+class PlaysController < WebsocketRails::BaseController
 	before_action :authenticate_user!
 
 	def destroy
-		@play = Play.where party_id: params[:party_id], track_id: params[:track_id]
+		@play = Play.find_by party_id: message[:party_id], 
+			track_id: message[:track_id]
 		status = 400
-		if Play.destroy(@play)
+		@track_id = @play.track_id
+		if @play.destroy
 			status = 200
 		end	
-		render :json => @play, :status => status
+		WebsocketRails[:destroyed_plays].trigger(:destroyed_play, @track_id)
 	end
 
 	def create
-		@play = Play.new party_id: params[:party_id], track_id: params[:track_id]
+		@play = Play.new party_id: message[:party_id], track_id: message[:track_id]
 		status = 400
 		if @play.save
 			status = 200
 		end
-		render :json => @play, :status => status
+		WebsocketRails[:new_plays].trigger(:new_play, @play);
 	end
 end

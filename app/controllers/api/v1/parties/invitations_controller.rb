@@ -1,6 +1,7 @@
 class API::V1::Parties::InvitationsController < ApplicationController
 	def index
-		@votes = Invitation.get_votes params[:party_id]
+		@party = Party.find params[:party_id]	
+		@votes = @party.get_votes
 
 		unless @votes.present?
 			@votes = [1] # If there is no votes the first song is reproduced

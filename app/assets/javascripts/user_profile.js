@@ -16,13 +16,22 @@ $(document).on('ready', function() {
 		$('#user').val(), "#new-parties-list", 'btn-ok', 'ok',
 	partiesGenerator.generateContext );
 
-	searcher.shineButtons('#current-parties-list', 'btn-go' );
-	searcher.shineButtons('#new-parties-list', 'btn-ok');
+	searcher.animateButtonsOnHover('#current-parties-list', 'btn-go-hover' );
+	searcher.animateButtonsOnHover('#new-parties-list', 'btn-ok-hover');
 
 	searcher.appendNewSearch('#new-parties-list',
-	partiesController.generatePartiesData, '/invitations', '/api/v1/parties/', 
-	'#current-parties-list', 'btn-go', 'arrow-right',
+	partiesController.generatePartiesData, 'create_invitation', 
+	'/api/v1/parties/', '#current-parties-list', 'btn-go', 'arrow-right',
 	partiesGenerator.generateContext)
+
+	var parties_channel = dispatcher.subscribe('accepted_invitations');
+
+	parties_channel.bind('accepted_invitation', function(invitation) {
+		var button_id = '#' + invitation.party_id
+		console.log(button_id);
+		$(button_id).removeClass('btn-disabled');
+	});
+
 });
 
 var ContextPartiesGenerator = function() {

@@ -1,18 +1,13 @@
 var Search = function(){
 	var self = this;
 
-	this.shineButtons = function shineButtons( list, btn_class ) {
+	this.animateButtonsOnHover = function shineButtons(list, hover_button_class) {
 		$( list ).on('mouseenter mouseleave', 'button', function() {
 			var button = this;
 			if (! $( this ).hasClass('btn-disabled') ) {
-				toggleButtons( button , btn_class, btn_class + '-hover');
+				$( button ).toggleClass( hover_button_class );
 			}
 		});
-	}
-
-	function toggleButtons( button, current_btn_class, new_btn_class) {
-		$( button ).toggleClass( current_btn_class );
-		$( button ).toggleClass( new_btn_class );
 	}
 
 	this.deleteCurrentSearch = function deleteCurrentSearch(list, deleteSearch){
@@ -39,18 +34,18 @@ var Search = function(){
 					refreshSearchList(null, searchs)
 				});
 			},
-			function( searchs, generateHtml) {
+			function( searchs, generateHtmlButton) {
 				refreshSearchList( searchs, destination_list, function( search, list ) {
-					generateHtml(null, search);
+					generateHtmlButton(null, search);
 				});
 			},
-			function( search, addButtonWithSearch) {
-				generateHtmlForList( search, button_class, icon, generateContext,
+			function( search, appendHtmlToList) {
+				generateHtmlButton( search, button_class, icon, generateContext,
 				function(htmlButton) {
-					addButtonWithSearch(null, destination_list, htmlButton);
+					appendHtmlToList(null, destination_list, htmlButton);
 				});
 			},
-			addButtonWithSearch	
+			appendHtmlToList
 		]);
 	}
 
@@ -73,18 +68,18 @@ var Search = function(){
 					refreshSearchList(null, searchs)	 
 				});
 			},
-			function( searchs, generateHtml ) {
+			function( searchs, generateHtmlButton ) {
 		 		refreshSearchList(searchs, destination_list, function(search) {
-					generateHtml(null, search)
+					generateHtmlButton(null, search)
 				});
 			},
-			function( search, addButtonWithSearch ) {
-				generateHtmlForList(search, button_class, icon, generateContext,
+			function( search, appendHtmlToList ) {
+				generateHtmlButton(search, button_class, icon, generateContext,
 				function(htmlButton){
-					addButtonWithSearch(null, destination_list, htmlButton );
+					appendHtmlToList(null, destination_list, htmlButton );
 				});
 			},
-			addButtonWithSearch
+			appendHtmlToList
 		]);
 	}
 
@@ -100,14 +95,14 @@ var Search = function(){
 		});
 	}
 
-	function refreshSearchList( searchs, list, addButtonWithSearch ){
+	function refreshSearchList( searchs, list, appendHtmlToList ){
 		$( list ).empty();
 		searchs.forEach( function(search) {
-			addButtonWithSearch( search );
+			appendHtmlToList( search );
 		});
 	}
 	
-	function addButtonWithSearch( list, html ) {
+	function appendHtmlToList( list, html ) {
 		$( list ).append( html );
 	}
 
@@ -119,18 +114,18 @@ var Search = function(){
 					refreshSearchList( null, searchs);
 				});
 			},
-			function( searchs, generateHtmlForList ) {
+			function( searchs, generateHtmlButton ) {
 				refreshSearchList( searchs, destination_list, function( search ) {
-					generateHtmlForList( null, search);
+					generateHtmlButton( null, search);
 				});  
 			},
-			function( search, addButtonWithSearch ) {
-				generateHtmlForList( search, btn_class, icon, generateContext,
+			function( search, appendHtmlToList ) {
+				generateHtmlButton( search, btn_class, icon, generateContext,
 				function(htmlButton) {
-					addButtonWithSearch(null,destination_list, htmlButton);
+					appendHtmlToList(null,destination_list, htmlButton);
 				});
 			},
-			addButtonWithSearch
+			appendHtmlToList
 		]);
 	}
 
@@ -148,12 +143,11 @@ var Search = function(){
 		});
 	}
 
-	function postSearch(data, post_url, button, 
-	addSearch ) {
-		$.post(post_url, data, function() {
-			addSearch( $( button ).attr('id') );
-			removeCurrentButton( button );	
-		});
+	function postSearch(data, event_name, button, 
+	appendSearch ) {
+		dispatcher.trigger( event_name, data );
+		appendSearch( $( button ).attr('id') );
+		removeCurrentButton( button );	
 	}
 
 	this.appendNewSearch = function appendNewSearch(current_list, 
@@ -170,44 +164,44 @@ var Search = function(){
 					postSearch(null, data, button);
 				});
 			},
-			function( data, button, addSearch) {
+			function( data, button, appendSearch) {
 				postSearch( data, post_url, button, function(id) { 
-					addSearch(null, id);
+					appendSearch(null, id);
 				});
 			},
-			function( id, generateHtmlForList ) {
-				addSearch(search_url, id, function( search ) { 
-					generateHtmlForList(null, search);
+			function( id, generateHtmlButton ) {
+				appendSearch(search_url, id, function( search ) { 
+					generateHtmlButton(null, search);
 				});
 			},
-			function(search, addButtonWithSearch) {
-				generateHtmlForList( search, button_class, icon, generateContext,
+			function(search, appendHtmlToList) {
+				generateHtmlButton( search, button_class, icon, generateContext,
 				function( htmlButton) {
-					addButtonWithSearch(null, destination_list, htmlButton);
+					appendHtmlToList(null, destination_list, htmlButton);
 				});
 			},
-			addButtonWithSearch
+			appendHtmlToList
 		]);
 	}
 	
 	
-	function addSearch(url, id, addButtonWithSearch) {
+	function appendSearch(url, id, appendHtmlToList) {
 		$.get(url + id, function( search ) {
-			addButtonWithSearch( search );
+			appendHtmlToList( search );
 		});
 	}
 
-	function generateHtmlForList( search, button_class, icon,
-	contextGenerator, addButtonWithSearch ) { 
+	function generateHtmlButton( search, button_class, icon,
+	contextGenerator, appendHtmlToList ) { 
 		var buttonTemplate = $("#button-generator").html();
 	
 		var template = Handlebars.compile(buttonTemplate);
 	
-		function compile(context) {
+		function compileTemplate(context) {
 			var htmlButton = template(context);
-			addButtonWithSearch( htmlButton );
+			appendHtmlToList( htmlButton );
 		}
 
-		contextGenerator( search, button_class, icon, compile);
+		contextGenerator( search, button_class, icon, compileTemplate);
 	}
 }

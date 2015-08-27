@@ -16,3 +16,4 @@
 //= require async
 //= require websocket_rails/main
 
+var dispatcher = new WebSocketRails('localhost:3000/websocket')

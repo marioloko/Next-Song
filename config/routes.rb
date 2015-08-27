@@ -8,12 +8,6 @@ Rails.application.routes.draw do
 	resources :parties, only: [:create,:edit]
 	get '/parties/:id/vote' => 'parties#vote', as: 'party_vote'
 
-	resources :plays, only: [:create]
-	delete '/plays' => 'plays#destroy'
-
-	resources :invitations, only: [:create]
-	patch '/invitations' => 'invitations#update'
-
 	get '/users/profile' => 'users#profile', as: 'profile'	
 
 	namespace :api do
@@ -47,8 +41,6 @@ Rails.application.routes.draw do
 			get '/search' => 'tracks#search'
 		end
 	end
-
-	get '*path' => redirect('/users/profile')
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

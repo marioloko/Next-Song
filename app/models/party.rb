@@ -16,6 +16,24 @@ class Party < ActiveRecord::Base
 		user.name	
 	end
 
+	def get_votes
+		invitations.pluck(:vote).compact
+	end
+
+	def get_counted_votes votes=get_votes, unit=1
+		counted_votes = Hash.new(0)
+		votes.each do |vote|
+			counted_votes[vote] += unit
+		end
+		counted_votes
+	end
+
+	def get_percentage_votes
+		votes = get_votes
+		percentage_unit = ( 1.0 / votes.length ) * 100
+		get_counted_votes votes, percentage_unit
+	end
+
 	def self.search search_params
 		where("name like ?", "%#{search_params}%")	
 	end

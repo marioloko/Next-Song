@@ -4,6 +4,14 @@ var tracksController = new TracksController();
 tracksController.showModalAfterClick();
 
 $(document).on('ready', function() {
+	var parties_channel = dispatcher.subscribe('new_invitations');
+
+	parties_channel.bind('new_invitation', function() {
+		searcher.displayCurrentSearchs('/api/v1/parties/_id_/users/not_accepted', 
+		$('#party').val(), '#parties-request-list', 'btn-friend', 'user',
+		usersGenerator.generateContext);
+	});
+
 	tracksController.setUpSong('/api/v1/parties/_id_/invitations', 
 	$('#party').val(), '/api/v1/tracks/_id_');
 
@@ -27,15 +35,15 @@ $(document).on('ready', function() {
 	$('#party').val(), '#new-songs-list', 'btn-ok', 'ok',
 	tracksGenerator.generateContext);
 
-	searcher.shineButtons('#current-songs-list', 'btn-remove');
+	searcher.animateButtonsOnHover('#current-songs-list', 'btn-remove-hover');
 
-	searcher.shineButtons('#new-songs-list', 'btn-ok');
+	searcher.animateButtonsOnHover('#new-songs-list', 'btn-ok-hover');
 
 	searcher.deleteCurrentSearch('#current-songs-list', 
 	tracksController.deleteSong);
 
 	searcher.appendNewSearch('#new-songs-list', 
-	tracksController.generateTrackData, '/plays', '/api/v1/tracks/', 
+	tracksController.generateTrackData, 'create_track', '/api/v1/tracks/', 
 	'#current-songs-list', 'btn-remove', 'remove',
 	tracksGenerator.generateContext );
 
@@ -46,7 +54,7 @@ $(document).on('ready', function() {
 	$('#party').val(), '#parties-request-list', 'btn-friend', 'user',
 	usersGenerator.generateContext);
 
-	searcher.shineButtons('#parties-request-list', 'btn-friend');
+	searcher.animateButtonsOnHover('#parties-request-list', 'btn-friend-hover');
 
 	searcher.deleteCurrentSearch('#parties-request-list',
 	tracksController.acceptUser)		

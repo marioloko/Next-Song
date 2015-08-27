@@ -1,17 +1,22 @@
 var searcher = new Search();
-var selectTrackController = SelectTrackController();
+var selectTrackController = new SelectTrackController();
 
 $(document).ready(function(){
 	var selectGenerator = new ContextSelectGenerator();
 
-	searcher.shineButtons('#next-songs-list', 'btn-like'); 
+	searcher.animateButtonsOnHover('#next-songs-list', 'btn-like-hover'); 
 	
-	setSelectTrack( '#next-songs-list', 'btn-select', 'glyphicon-thumbs-up',
-		 'glyphicon-fire' );
+	selectTrackController.setSelectTrack( '#next-songs-list', 'btn-select', 
+	'glyphicon-thumbs-up', 'glyphicon-fire' );
 
 	searcher.authomaticSearch('/api/v1/parties/_id_/tracks', $('#party').val(),
 	'#next-songs-list', 'btn-like', 'thumbs-up', 
 	selectGenerator.generateContext);
+
+	selectTrackController.setAddedSongEvent(selectGenerator.generateContext);
+	selectTrackController.setRemovedSongEvent();
+	
+	selectTrackController.setUpdateProgressBarEvent();
 });
 
 var ContextSelectGenerator = function() {

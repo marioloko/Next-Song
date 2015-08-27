@@ -20,41 +20,42 @@
 </head>
 
 <body class="outer-background">
-	<div class="container inner-background full-background">
+	<div class="bright-background">
+		<div class="container inner-background full-background">
 
-		<div class="row">
-			<header>
-				<div class="col-md-12 text-center">
-					<h1>NEXT SONG</h1>
+			<div class="row">
+				<header>
+					<div class="col-md-12 text-center">
+						<h1>NEXT SONG</h1>
+					</div>
+	
+					<div class="col-md-offset-1 col-md-10 navigation-box">
+						<nav id="top-bar">
+	
+							<ul class="list-unstyled list-inline">
+								<li>
+									<%= link_to 'Profile', profile_path %>
+								</li>
+	
+								<li>
+									<%= link_to 'Sign Out', destroy_user_session_path,
+									 	method: 'DELETE' %>
+								</li>
+							</ul>
+	
+						</nav>
+					</div>
+				</header>
+			</div>
+	
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+	
+					<%= yield %>
+			
 				</div>
-
-				<div class="col-md-offset-1 col-md-10 navigation-box">
-					<nav id="top-bar">
-
-						<ul class="list-unstyled list-inline">
-							<li>
-								<%= link_to 'Profile', profile_path %>
-							</li>
-
-							<li>
-								<%= link_to 'Sign Out', destroy_user_session_path,
-									 method: 'DELETE' %>
-							</li>
-						</ul>
-
-					</nav>
-				</div>
-			</header>
-		</div>
-
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-
-				<%= yield %>
-		
 			</div>
 		</div>
-
 	</div>
 </body>
 </html>
