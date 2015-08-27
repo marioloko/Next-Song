@@ -1,5 +1,5 @@
 var SelectTrackController = function() {
-	var searcher = new Search();
+	var searcher = new Searcher();
 
 	this.setSelectTrack = function setSelectTrack( list, select_btn_class, 
 	current_icon, select_icon) {
@@ -36,7 +36,7 @@ var SelectTrackController = function() {
 		var plays_channel = dispatcher.subscribe('new_plays');
 
 		plays_channel.bind('new_play', function(play) {
-			searcher.authomaticSearch('/api/v1/parties/_id_/tracks', 
+			searcher.backgroundSearch('/api/v1/parties/_id_/tracks', 
 			$('#party').val(), '#next-songs-list', 'btn-like', 'thumbs-up', 
 			generateContext);
 		});

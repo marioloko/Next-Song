@@ -1,7 +1,7 @@
-var Search = function(){
+var Searcher = function(){
 	var self = this;
 
-	this.animateButtonsOnHover = function shineButtons(list, hover_button_class) {
+	this.animateButtonsOnHover = function(list, hover_button_class) {
 		$( list ).on('mouseenter mouseleave', 'button', function() {
 			var button = this;
 			if (! $( this ).hasClass('btn-disabled') ) {
@@ -10,27 +10,27 @@ var Search = function(){
 		});
 	}
 
-	this.deleteCurrentSearch = function deleteCurrentSearch(list, deleteSearch){
-		$(list).on('click', 'button', function(event) {
+	this.setButtonOnClickActionEvent = function(list, clickAction){
+		$(list).on('click', 'button', function getButtonClickAction(event) {
 			event.preventDefault();
 			var button = this;
-			if (typeof deleteSearch === "function") {
-				deleteSearch(button, function() {
-					removeCurrentButton( button );
+			if (typeof clickAction === "function") {
+				clickAction(button, function() {
+					removeParentLi( button );
 				});
 			}
 		});
 	}
 
-	function removeCurrentButton( button ) {
+	function removeParentLi( button ) {
 		$( button ).closest('li').remove();
 	}
 
-	this.searchAction = function searchAction(search_url, party_id, 
-	destination_list, button_class, icon, generateContext) {	
+	this.searchBoxAction = function(search_url, party_id, destination_list,
+	button_class, icon, generateContext) {	
 		async.waterfall([
 			function( refreshSearchList ) {
-				enterForSearching(search_url, party_id, function( searchs ) {
+				setEnterForSearchingEvent(search_url, party_id, function( searchs ) {
 					refreshSearchList(null, searchs)
 				});
 			},
@@ -49,9 +49,9 @@ var Search = function(){
 		]);
 	}
 
-	function enterForSearching(url_format, party_id, 
+	function setEnterForSearchingEvent(url_format, party_id, 
 	refreshSearchList ) {
-		$("#search").on('keydown', function(event) {
+		$("#search").on('keydown', function enterForSearching(event) {
 			if (event.which == 13) {
 				event.preventDefault();
 				search_data = $("#search").val();
@@ -60,8 +60,8 @@ var Search = function(){
 		});
 	}
 
-	this.authomaticSearch = function authomaticSearch (search_url, party_id,
-	destination_list, button_class, icon, generateContext ) {
+	this.backgroundSearch = function(search_url, party_id, destination_list,
+	button_class, icon, generateContext ) {
 		async.waterfall([
 			function( refreshSearchList ) {
 				search(null ,search_url, party_id, function( searchs ) {
@@ -106,11 +106,11 @@ var Search = function(){
 		$( list ).append( html );
 	}
 
-	this.displayCurrentSearchs = function displayCurrentSearchs(search_url,
- 	party_id, destination_list, btn_class, icon, generateContext ) {
+	this.displayCurrentSearchs = function(search_url, party_id, destination_list,
+	btn_class, icon, generateContext ) {
 		async.waterfall([
 			function( refreshSearchList ) {
-				showCurrentSearchs(search_url, party_id, function( searchs ) { 
+				getCurrentSearchs(search_url, party_id, function( searchs ) { 
 					refreshSearchList( null, searchs);
 				});
 			},
@@ -129,13 +129,13 @@ var Search = function(){
 		]);
 	}
 
-	function showCurrentSearchs(url_format, id, refreshSearchList ) {
+	function getCurrentSearchs(url_format, id, refreshSearchList ) {
 		var url = url_format.replace('_id_', id)
 		$.get(url, refreshSearchList);
 	}
 	
-	function addNewSearch( list, generateData ) {
-		$( list ).on('click', 'button', function(event) {
+	function setGetButtonOnClickEvent( list, generateData ) {
+		$( list ).on('click', 'button', function getClickedButton(event) {
 			event.preventDefault();
 			var button = this;
 	
@@ -147,15 +147,14 @@ var Search = function(){
 	appendSearch ) {
 		dispatcher.trigger( event_name, data );
 		appendSearch( $( button ).attr('id') );
-		removeCurrentButton( button );	
+		removeParentLi( button );	
 	}
 
-	this.appendNewSearch = function appendNewSearch(current_list, 
-	generateData, post_url, search_url, destination_list, button_class,
-	icon, generateContext) {	
+	this.appendNewSearch = function(current_list, generateData, post_url,
+	search_url, destination_list, button_class, icon, generateContext) {	
 		async.waterfall([
 			function( generateData ) {
-				addNewSearch(current_list, function( button ) {
+				setGetButtonOnClickEvent(current_list, function( button ) {
 					generateData(null, button)
 				});
 			},

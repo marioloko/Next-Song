@@ -1,4 +1,4 @@
-var searcher = new Search();
+var searcher = new Searcher();
 var selectTrackController = new SelectTrackController();
 
 $(document).ready(function(){
@@ -9,7 +9,7 @@ $(document).ready(function(){
 	selectTrackController.setSelectTrack( '#next-songs-list', 'btn-select', 
 	'glyphicon-thumbs-up', 'glyphicon-fire' );
 
-	searcher.authomaticSearch('/api/v1/parties/_id_/tracks', $('#party').val(),
+	searcher.backgroundSearch('/api/v1/parties/_id_/tracks', $('#party').val(),
 	'#next-songs-list', 'btn-like', 'thumbs-up', 
 	selectGenerator.generateContext);
 

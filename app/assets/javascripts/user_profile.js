@@ -1,4 +1,4 @@
-var searcher = new Search();
+var searcher = new Searcher();
 var partiesController = new PartiesController();
 
 partiesController.showPartyModal();
@@ -12,7 +12,7 @@ $(document).on('ready', function() {
 	'#current-parties-list', 'btn-go', 'arrow-right',
 	partiesGenerator.generateContext);
 	
-	searcher.searchAction('/api/v1/users/_id_/search_excluded', 
+	searcher.searchBoxAction('/api/v1/users/_id_/search_excluded', 
 		$('#user').val(), "#new-parties-list", 'btn-ok', 'ok',
 	partiesGenerator.generateContext );
 

@@ -1,6 +1,6 @@
 var TracksController = function() {
 	var self = this;
-	var searcher = new Search();
+	var searcher = new Searcher();
 	
 	this.setUpSong = function setUpSong(votes_url_format, party_id,
 	song_url_format) {

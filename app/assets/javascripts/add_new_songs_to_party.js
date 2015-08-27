@@ -1,4 +1,4 @@
-var searcher = new Search();
+var searcher = new Searcher();
 var tracksController = new TracksController();
 
 tracksController.showModalAfterClick();
@@ -31,7 +31,7 @@ $(document).on('ready', function() {
 	$('#party').val(), '#current-songs-list', 'btn-remove', 'remove',
 	tracksGenerator.generateContext);
 
-	searcher.searchAction('/api/v1/parties/_id_/search_excluded',
+	searcher.searchBoxAction('/api/v1/parties/_id_/search_excluded',
 	$('#party').val(), '#new-songs-list', 'btn-ok', 'ok',
 	tracksGenerator.generateContext);
 
@@ -39,7 +39,7 @@ $(document).on('ready', function() {
 
 	searcher.animateButtonsOnHover('#new-songs-list', 'btn-ok-hover');
 
-	searcher.deleteCurrentSearch('#current-songs-list', 
+	searcher.setButtonOnClickActionEvent('#current-songs-list', 
 	tracksController.deleteSong);
 
 	searcher.appendNewSearch('#new-songs-list', 
@@ -56,7 +56,7 @@ $(document).on('ready', function() {
 
 	searcher.animateButtonsOnHover('#parties-request-list', 'btn-friend-hover');
 
-	searcher.deleteCurrentSearch('#parties-request-list',
+	searcher.setButtonOnClickActionEvent('#parties-request-list',
 	tracksController.acceptUser)		
 
 });
