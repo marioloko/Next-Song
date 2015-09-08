@@ -11,6 +11,7 @@ Rails.application.config.assets.precompile += %w( vote_controller.js )
 Rails.application.config.assets.precompile += %w( tracks_model.js )
 Rails.application.config.assets.precompile += %w( parties_model.js )
 Rails.application.config.assets.precompile += %w( vote_model.js )
+Rails.application.config.assets.precompile += %w( amplitude.min.js )
 
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path

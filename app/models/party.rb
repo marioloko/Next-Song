@@ -8,10 +8,6 @@ class Party < ActiveRecord::Base
 	validates :name, :user_id, presence: true
 	validates :name, uniqueness: true
 
-	def self.current_user current_user
-		@@current_user = current_user	
-	end
-
 	def owner
 		user.name	
 	end
@@ -34,10 +30,6 @@ class Party < ActiveRecord::Base
 		get_counted_votes votes, percentage_unit
 	end
 
-	def self.search search_params
-		where("name like ?", "%#{search_params}%")	
-	end
-
 	def accepted user=nil
 		user ||= @@current_user
 		Invitation.where(party_id: id, user_id: user.id, accepted: true).present?
@@ -45,5 +37,17 @@ class Party < ActiveRecord::Base
 
 	def get_accepted_users accepted=true
 		users.references(:invitations).where(invitations: { accepted: accepted })
+	end
+
+	def reset_votes_with track_id
+		invitations.reset_votes_with track_id
+	end
+
+	def self.current_user current_user
+		@@current_user = current_user	
+	end
+
+	def self.search search_params
+		where("name like ?", "%#{search_params}%")	
 	end
 end

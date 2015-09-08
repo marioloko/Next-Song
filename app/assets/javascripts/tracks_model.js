@@ -5,21 +5,47 @@ var TracksModel = function() {
 	this.setUpSong = function setUpSong(votes_url_format, party_id,
 	song_url_format) {
 		var votes_url = votes_url_format.replace('_id_', party_id);
-		getCompactVotes(votes_url, song_url_format);
+
+		async.waterfall([
+			function(chooseNextSong) {
+				getCompactVotes(votes_url, function( votes ) {
+					chooseNextSong( null, votes );
+				});
+			},
+			function( votes ) {
+				chooseNextSong( votes, song_url_format );
+			}
+		]);
 	}
 
-	function getCompactVotes(votes_url, song_url_format){
-	$.get(votes_url, function( votes ) {
-			var voteIndex = Math.floor( Math.random() * votes.length);
-			var vote = votes[voteIndex];
-			var song_url = song_url_format.replace('_id_', vote);
-			getSong(song_url);
+	function getCompactVotes(votes_url, chooseNextSong){
+		$.get(votes_url, function( votes ) {
+			if (votes.length) {
+				toggleHidden('#player-error', '#audio-player');
+				chooseNextSong( votes );
+			} else {
+				// Show error if any song voted in the play list
+				toggleHidden('#audio-player', '#player-error');
+			}
 		});
+	}
+
+	function chooseNextSong( votes, song_url_format ) {
+		var voteIndex = Math.floor( Math.random() * votes.length );
+		var vote = votes[voteIndex];
+		var song_url = song_url_format.replace('_id_', vote);
+		getSong(song_url);
+	}
+
+	function toggleHidden(idToHide, idToShow) {
+		$( idToHide ).addClass('hide'),	
+		$( idToShow ).removeClass('hide');
 	}
 
 	function getSong(song_url) {
 		$.get(song_url, function( track ) {
 			$("#song-player").attr('src', track.audio_url);
+			$("#current-song-data").text(track.title + '-' + track.artist);
 		});	
 	}
 	

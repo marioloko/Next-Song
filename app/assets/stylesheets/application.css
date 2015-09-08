@@ -16,6 +16,8 @@
 
 .outer-background {
 	background-image: url('wallpapper.jpeg');
+	font-family: 'Lobster', cursive;
+	font: 'Lobster', cursive;
 }
 
 .inner-background {
@@ -106,78 +108,78 @@
 .btn-rounded {
 	height: 40px;
 	width: 40px;
-	border-radius: 100%;
+	border-radius: 25%;
 }
 
 .btn-ok {
 	background-color: #5e5;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-ok-hover {
 	background-color: white;
-	border: solid 1px #5d5;
+	border: solid 2px #5d5;
 	color: #5e5;
 }
 
 .btn-remove {
 	background-color: #e55;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-remove-hover {
 	background-color: white;
-	border: solid 1px #d55;
+	border: solid 2px #d55;
 	color: #e55;
 }
 
 .btn-go {
 	background-color: #55e;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-go-hover {
 	background-color: white;
-	border: solid 1px #55d;
+	border: solid 2px #55d;
 	color: #55e;
 }
 
 .btn-like {
 	background-color: #3b9;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-like-hover {
 	background-color: white;
-	border: solid 1px #3cc;
+	border: solid 2px #3cc;
 	color: #3b9;
 }
 
 .btn-select {
 	background-color: #e82;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-select-hover {
 	background-color: white;
-	border: solid 1px #e82;
+	border: solid 2px #e82;
 	color: #e82;
 }
 
 .btn-friend {
 	background-color: #9d2;
-	border: solid 1px #eee;
+	border: solid 2px #eee;
 	color: white;
 }
 
 .btn-friend-hover {
 	background-color: white;
-	border: solid 1px #9d2;
+	border: solid 2px #9d2;
 	color: #9d2;
 }
 
@@ -195,7 +197,7 @@
 
 .btn-disabled {
 	background-color: #eee;
-	border: solid 1px #ccc;
+	border: solid 2px #ccc;
 	color: #ccc;
 }
 
@@ -228,15 +230,28 @@
 * html dd { float: none; }
 
 .graphic-description div {
-	position: relative;
+	position: static; 
 	background-color: #3c3;
 	height: 16px;
 	width: 0%;
 	text-align: right;
 	border-radius: 20px;
-	border: solid 1px #999;
+	border: hidden 2px;
+}
+
+.graphic-description span {
+	position: absolute;
+	display: block;
+	text-align: center;
+	width: 100%;
+	font-family: 'Lobster', cursive;
+	font: 'Lobster', cursive;
 }
 
 #not-invited .modal-dialog {
 	margin-top: 40vh;
+}
+
+.error {
+	color: #b33;
 }

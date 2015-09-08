@@ -47,7 +47,7 @@ var VoteModel = function() {
 		
 		plays_channel.bind('destroyed_play', function(track_id) {
 			var button_id = '#' + track_id;
-			$(button_id).closest('li').remove();
+			$(button_id).closest('dt').parent().remove();
 		});
 	}
 
@@ -55,16 +55,20 @@ var VoteModel = function() {
 		var invitations_channel = dispatcher.subscribe('votes');
 	
 		invitations_channel.bind('new_vote', function( percentage_votes ) {
-			refreshProgressBars( percentage_votes );
+			refreshAllProgressBars( percentage_votes );
 		});
 	}
 
-	function refreshProgressBars( percentage_votes ) {
-		$('#next-songs-list [id^=p]').width( '0%' ).text( '0%' );	
+	function refreshAllProgressBars( percentage_votes ) {
+		$('#next-songs-list [id^=progress]').width( '0%' ).children().text( '0%' );	
 		for (var vote in percentage_votes) {
-			$('#p' + vote ).width( percentage_votes[vote] + '%' )
-				.text( Math.round(percentage_votes[vote]) + '%' );
+			refreshProgressBar( vote, percentage_votes );
 		}
+	}
+
+	function refreshProgressBar( vote, percentage_votes ) {
+		$('#progress' + vote ).width( percentage_votes[vote] + '%' )
+			.children().text( Math.round(percentage_votes[vote]) + '%' );
 	}
 }
 

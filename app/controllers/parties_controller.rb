@@ -15,6 +15,7 @@ class PartiesController < ApplicationController
 	def edit
 		@party = Party.find params[:id]
 		@track = Track.new
+		@votes = @party.get_votes
 		unless current_user.owner? @party
 			redirect_to party_vote_path
 		end

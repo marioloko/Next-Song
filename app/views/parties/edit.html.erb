@@ -3,7 +3,22 @@
 <div class="row">
 	<div class="col-md-5">
 		<h2>Play your party: <%= @party.name %></h2>
-		<audio src="" controls id="song-player"></audio>
+
+		<div id="player-error" class="error <%= (@votes.present?) ? 'hide' : '' %>">
+			<p class="lead">
+				<% if @party.plays.present? %>
+					Your music has not been voted yet
+				<% else %>
+					You has not any music
+				<% end %>
+			</p>
+		</div>
+
+		<div id="audio-player" class="<%= (@votes.blank?) ? 'hide' : '' %>">
+			<h4 id="current-song-data"></h4>
+			<audio src="" controls id="song-player"></audio>
+		</div>
+
 		<h3>Add songs to your party</h3>
 		<div class="form-group">
 			<%= label_tag :search %>
@@ -40,6 +55,7 @@
 <!-- JavaScript files -->
 <%= javascript_include_tag 'tracks_model' %>
 <%= javascript_include_tag 'searcher' %>
+<%= javascript_include_tag 'amplitude.min' %>
 
 <script id="button-generator" type="text/x-handlebars-template">
 	<%= render partial: 'parties/button_generator' %>
